@@ -8,7 +8,7 @@
             Weather Around The World
           </h1>
           <h2 class="subtitle">
-            Search Result For "{{ $route.params.keyword }}"
+            Search Result For "{{ decodeURI($route.params.keyword) }}"
           </h2>
         </div>
       </div>
@@ -40,11 +40,20 @@ export default {
     doSearch () {
       this.results = []
       const loadingComponent = this.$loading.open()
-      let keyword = this.$route.params.keyword
+      let keyword = encodeURI(this.$route.params.keyword)
       this.$http.get(`${this.$weather_api}?command=search&keyword=${keyword}`)
         .then(response => {
           this.results = response.data
           loadingComponent.close()
+
+          if (this.results.length === 0) {
+            this.$toast.open({
+              duration: 5000,
+              message: 'No results were found. Try changing the keyword!',
+              position: 'is-bottom',
+              type: 'is-danger'
+            })
+          }
         }, error => {
           loadingComponent.close()
           this.$snackbar.open({
@@ -59,7 +68,6 @@ export default {
     }
   },
   watch: {
-    // call again the method if the route changes
     '$route': 'doSearch'
   },
   created () {

@@ -46,7 +46,7 @@ export default {
   },
   methods: {
     search () {
-      this.$router.push({name: 'search', params: {keyword: this.keyword}})
+      this.$router.push({name: 'search', params: {keyword: encodeURI(this.keyword)}})
     }
   }
 }

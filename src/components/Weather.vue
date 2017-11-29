@@ -4,7 +4,7 @@
         <div class="card-content" v-if="loading">
           <i class="mdi mdi-loading mdi-48px mdi-spin"></i>
         </div>
-        <div class="card-content" v-if="!loading">
+        <div class="card-content with-link" v-if="!loading" @click="details()">
           <div class="media">
             <div class="media-left">
               <b-tooltip :label="weather.today.weather_state_name">
@@ -15,7 +15,7 @@
             </div>
             <div class="media-content">
               <p class="title is-4">{{ weather.title }}</p>
-              <p class="subtitle is-6">Today: {{ weather.today.the_temp | round }} - (Max: {{ weather.today.max_temp | round  }} | Min: {{ weather.today.min_temp | round  }} ) </p>
+              <p class="subtitle is-6">Temp: {{ weather.today.the_temp | round }}° - (Max: {{ weather.today.max_temp | round  }}° | Min: {{ weather.today.min_temp | round  }}° ) </p>
             </div>
           </div>
         </div>
@@ -36,7 +36,7 @@ export default {
   },
   filters: {
     round (value) {
-      return value ? value.toFixed(2) : value
+      return value ? value.toFixed(0) : value
     }
   },
   methods: {
@@ -59,6 +59,9 @@ export default {
     },
     weatherIcon (abbr) {
       return `https://www.metaweather.com/static/img/weather/${abbr}.svg`
+    },
+    details () {
+      this.$router.push({name: 'weather', params: {woeid: this.woeid}})
     }
   },
   created () {
@@ -66,3 +69,7 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  .with-link { cursor: pointer; }
+</style>
