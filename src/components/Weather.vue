@@ -41,7 +41,7 @@ export default {
   },
   methods: {
     loadWeather (woeid) {
-      this.$http.get('http://localhost/weather.php?command=location&woeid=' + woeid)
+      this.$http.get(`${this.$weather_api}?command=location&woeid=${woeid}`)
         .then(response => {
           this.weather = response.data
           this.weather.today = response.data.consolidated_weather[0]

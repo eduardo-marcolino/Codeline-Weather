@@ -12,6 +12,7 @@ Vue.use(Buefy)
 Vue.config.productionTip = false
 
 Vue.use(VueResource)
+Vue.prototype.$weather_api = 'http://localhost/weather.php'
 
 /* eslint-disable no-new */
 new Vue({

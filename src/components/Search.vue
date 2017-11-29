@@ -41,7 +41,7 @@ export default {
       this.results = []
       const loadingComponent = this.$loading.open()
       let keyword = this.$route.params.keyword
-      this.$http.get('http://localhost/weather.php?command=search&keyword=' + keyword)
+      this.$http.get(`${this.$weather_api}?command=search&keyword=${keyword}`)
         .then(response => {
           this.results = response.data
           loadingComponent.close()
